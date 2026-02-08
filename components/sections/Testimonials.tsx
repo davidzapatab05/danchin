@@ -21,11 +21,29 @@ const testimonials = [
         text: "Daniel atiende a mi madre con una paciencia y dedicación admirables. Hemos visto una gran mejora en su movilidad. ¡Gracias Danchin!",
         rating: 5,
     },
+    {
+        name: "Roberto Sánchez",
+        role: "Ejecutivo",
+        text: "Excelente servicio. Daniel es muy profesional y explica cada paso del proceso. Mi dolor de cuello persistente desapareció por completo.",
+        rating: 5,
+    },
+    {
+        name: "Lucía Méndez",
+        role: "Ama de Casa",
+        text: "La comodidad de recibir terapia en casa no tiene precio. El equipo que traen es de primera y los resultados se sienten desde la primera sesión.",
+        rating: 5,
+    },
+    {
+        name: "Jorge Castro",
+        role: "Futbolista Amateur",
+        text: "Muy recomendado para deportistas. Me ayudó con una lesión de rodilla que otros no pudieron resolver. Gran conocimiento técnico y humano.",
+        rating: 5,
+    },
 ]
 
 export function Testimonials() {
     return (
-        <section className="py-24 bg-background">
+        <section id="testimonios" className="py-24 bg-background scroll-mt-20">
             <div className="container mx-auto px-4">
                 <ScrollAnimation animation="fade-in">
                     <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
