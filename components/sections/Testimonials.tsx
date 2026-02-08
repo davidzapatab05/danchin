@@ -1,6 +1,8 @@
+import * as React from "react"
 import { ScrollAnimation } from "@/components/ui/scroll-animation"
 import { Card, CardContent } from "@/components/ui/card"
-import { Quote } from "lucide-react"
+import { Quote, ChevronLeft, ChevronRight } from "lucide-react"
+import { Button } from "@/components/ui/button"
 
 const testimonials = [
     {
@@ -42,6 +44,19 @@ const testimonials = [
 ]
 
 export function Testimonials() {
+    const scrollRef = React.useRef<HTMLDivElement>(null)
+
+    const scroll = (direction: 'prev' | 'next') => {
+        if (scrollRef.current) {
+            const { scrollLeft, clientWidth } = scrollRef.current
+            const scrollTo = direction === 'prev'
+                ? scrollLeft - clientWidth
+                : scrollLeft + clientWidth
+
+            scrollRef.current.scrollTo({ left: scrollTo, behavior: 'smooth' })
+        }
+    }
+
     return (
         <section id="testimonios" className="py-24 bg-background scroll-mt-20">
             <div className="container mx-auto px-4">
@@ -59,31 +74,59 @@ export function Testimonials() {
                     </div>
                 </ScrollAnimation>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
-                    {/* Decorative blobs */}
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-4xl bg-primary/5 rounded-full blur-3xl -z-10 pointer-events-none" />
+                <div className="relative group">
+                    <div
+                        className="flex overflow-x-auto snap-x snap-mandatory gap-6 no-scrollbar pb-8 px-4 -mx-4 scroll-smooth"
+                        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                        ref={scrollRef}
+                    >
+                        {testimonials.map((testimonial, index) => (
+                            <div
+                                key={index}
+                                className="min-w-full md:min-w-[calc(50%-12px)] lg:min-w-[calc(33.333%-16px)] snap-center first:pl-0"
+                            >
+                                <ScrollAnimation key={index} delay={index * 100} animation="slide-up" className="h-full">
+                                    <Card className="bg-card/50 backdrop-blur-sm border border-border/50 shadow-sm hover:shadow-xl hover:border-primary/20 transition-all duration-300 h-full flex flex-col group/card">
+                                        <CardContent className="pt-8 px-8 pb-8 flex-grow flex flex-col">
+                                            <Quote className="h-10 w-10 text-primary mb-6 opacity-20 group-hover/card:opacity-40 transition-opacity" />
+                                            <div className="flex gap-1 mb-4">
+                                                {[...Array(5)].map((_, i) => (
+                                                    <span key={i} className="text-yellow-400 text-lg">★</span>
+                                                ))}
+                                            </div>
+                                            <p className="text-foreground/80 italic mb-8 leading-relaxed flex-grow">
+                                                "{testimonial.text}"
+                                            </p>
+                                            <div className="mt-auto pt-6 border-t border-border/50">
+                                                <p className="font-bold text-foreground group-hover/card:text-primary transition-colors">{testimonial.name}</p>
+                                                <p className="text-sm text-primary font-medium">{testimonial.role}</p>
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+                                </ScrollAnimation>
+                            </div>
+                        ))}
+                    </div>
 
-                    {testimonials.map((testimonial, index) => (
-                        <ScrollAnimation key={index} delay={index * 200} animation="slide-up" className="h-full">
-                            <Card className="bg-card/50 backdrop-blur-sm border border-border/50 shadow-sm hover:shadow-xl hover:border-primary/20 transition-all duration-300 hover:-translate-y-2 h-full flex flex-col group">
-                                <CardContent className="pt-8 px-8 pb-8 flex-grow flex flex-col">
-                                    <Quote className="h-10 w-10 text-primary mb-6 opacity-20 group-hover:opacity-40 transition-opacity" />
-                                    <div className="flex gap-1 mb-4">
-                                        {[...Array(5)].map((_, i) => (
-                                            <span key={i} className="text-yellow-400 text-lg">★</span>
-                                        ))}
-                                    </div>
-                                    <p className="text-foreground/80 italic mb-8 leading-relaxed flex-grow">
-                                        "{testimonial.text}"
-                                    </p>
-                                    <div className="mt-auto pt-6 border-t border-border/50">
-                                        <p className="font-bold text-foreground group-hover:text-primary transition-colors">{testimonial.name}</p>
-                                        <p className="text-sm text-primary font-medium">{testimonial.role}</p>
-                                    </div>
-                                </CardContent>
-                            </Card>
-                        </ScrollAnimation>
-                    ))}
+                    {/* Navigation Buttons */}
+                    <div className="flex justify-center gap-4 mt-8">
+                        <Button
+                            variant="outline"
+                            size="icon"
+                            className="rounded-full border-primary/20 hover:bg-primary/10 text-primary"
+                            onClick={() => scroll('prev')}
+                        >
+                            <ChevronLeft className="h-6 w-6" />
+                        </Button>
+                        <Button
+                            variant="outline"
+                            size="icon"
+                            className="rounded-full border-primary/20 hover:bg-primary/10 text-primary"
+                            onClick={() => scroll('next')}
+                        >
+                            <ChevronRight className="h-6 w-6" />
+                        </Button>
+                    </div>
                 </div>
             </div>
         </section>

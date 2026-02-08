@@ -18,7 +18,7 @@ export function ScrollAnimation({
     animation = "slide-up",
     duration = 700,
     delay = 0,
-    triggerOnce = true,
+    triggerOnce = false,
 }: ScrollAnimationProps) {
     const { ref, isInView } = useInView({ threshold: 0, rootMargin: "0px", triggerOnce });
 
