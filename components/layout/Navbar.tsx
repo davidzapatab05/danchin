@@ -27,6 +27,18 @@ export function Navbar() {
     const [open, setOpen] = React.useState(false)
 
     const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+        if (href === "/" || href === "/#inicio") {
+            if (window.location.pathname === "/") {
+                e.preventDefault()
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                })
+                setOpen(false)
+                return
+            }
+        }
+
         if (href.startsWith("/#")) {
             e.preventDefault()
             const id = href.replace("/#", "")
@@ -48,7 +60,7 @@ export function Navbar() {
     return (
         <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
             <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-                <Link href="/" className="flex items-center space-x-2">
+                <Link href="/" className="flex items-center space-x-2" onClick={(e) => handleScroll(e, "/")}>
                     <NextImage
                         src="/images/logo.webp"
                         alt="Danchin Logo"
@@ -56,6 +68,8 @@ export function Navbar() {
                         height={40}
                         className="h-10 w-auto object-contain"
                         priority
+                        // @ts-ignore - fetchPriority is supported by modern browsers but may not be in all TS types yet
+                        fetchPriority="high"
                     />
                     <span className="text-xl font-bold text-primary tracking-tight hidden sm:block">Danchin</span>
                 </Link>
@@ -110,7 +124,7 @@ export function Navbar() {
                             <div className="mobile-nav px-7 py-4">
                                 <Link
                                     href="/"
-                                    onClick={() => setOpen(false)}
+                                    onClick={(e) => handleScroll(e, "/")}
                                     className="flex items-center"
                                 >
                                     <span className="font-bold text-lg">Danchin</span>
