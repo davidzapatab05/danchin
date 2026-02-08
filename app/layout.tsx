@@ -11,6 +11,15 @@ export const metadata: Metadata = {
   description: "Especialistas en fisioterapia a domicilio, rehabilitación física y masajes terapéuticos en Lima. Trato humano y resultados reales con el Lic. Daniel Chinguel.",
   keywords: ["fisioterapia", "rehabilitación", "masajista", "lima", "domicilio", "terapia fisica", "dolor de espalda"],
   manifest: "/manifest.webmanifest",
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/icons/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+    ],
+    apple: [
+      { url: "/icons/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
   openGraph: {
     type: "website",
     locale: "es_PE",
