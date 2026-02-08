@@ -60,7 +60,7 @@ export default function RootLayout({
   return (
     <html lang="es" suppressHydrationWarning>
       <head>
-        <link rel="preconnect" href="https://www.transparenttextures.com" />
+        <link rel="preconnect" href="https://www.transparenttextures.com" crossOrigin="anonymous" />
       </head>
       <body className={inter.className}>
         <ThemeProvider
