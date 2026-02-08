@@ -1,3 +1,5 @@
+"use client"
+
 import * as React from "react"
 import { ScrollAnimation } from "@/components/ui/scroll-animation"
 import { Card, CardContent } from "@/components/ui/card"
