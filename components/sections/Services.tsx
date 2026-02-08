@@ -27,7 +27,7 @@ const services = [
 
 export function Services() {
     return (
-        <section id="servicios" className="py-32 bg-gradient-to-b from-background to-muted/30">
+        <section id="servicios" className="py-32 bg-gradient-to-b from-background to-muted/30 scroll-mt-24">
             <div className="container mx-auto px-4">
                 <ScrollAnimation animation="fade-in">
                     <div className="text-center max-w-3xl mx-auto mb-20 space-y-4">

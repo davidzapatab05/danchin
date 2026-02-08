@@ -3,7 +3,7 @@ import { MessageCircle } from "lucide-react"
 
 export function Contact() {
     return (
-        <section id="contacto" className="py-20 bg-primary text-primary-foreground relative overflow-hidden">
+        <section id="contacto" className="py-20 bg-primary text-primary-foreground relative overflow-hidden scroll-mt-24">
             {/* Background pattern */}
             <div className="absolute inset-0 opacity-10 pattern-grid-lg" />
 
