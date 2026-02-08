@@ -34,7 +34,7 @@ export function Navbar() {
                         width="40"
                         height="40"
                         className="h-10 w-auto object-contain"
-                        fetchpriority="high"
+                        fetchPriority="high"
                     />
                     <span className="text-xl font-bold text-primary tracking-tight hidden sm:block">Danchin</span>
                 </Link>
