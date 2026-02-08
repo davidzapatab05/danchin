@@ -38,6 +38,9 @@ export const metadata: Metadata = {
     statusBarStyle: "default",
     title: "Danchin",
   },
+  verification: {
+    google: "G1oKjRa4UD5EXuvruOJTJxoKUAqhijjc-j8ZJsgTE6s",
+  },
   formatDetection: {
     telephone: false,
   },
