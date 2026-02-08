@@ -14,7 +14,7 @@ const benefits = [
 
 export function Benefits() {
     return (
-        <section id="beneficios" className="py-40 overflow-hidden bg-gradient-to-b from-muted/30 to-background scroll-mt-24">
+        <section id="beneficios" className="py-40 overflow-hidden bg-gradient-to-b from-muted/30 to-background scroll-mt-20">
             <div className="container mx-auto px-4">
                 <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
 

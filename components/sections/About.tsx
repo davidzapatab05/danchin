@@ -5,7 +5,7 @@ import { Dna } from "lucide-react"
 
 export function About() {
     return (
-        <section id="nosotros" className="py-24 min-h-screen flex items-center bg-muted/30 scroll-mt-24">
+        <section id="nosotros" className="py-24 min-h-screen flex items-center bg-muted/30 scroll-mt-20">
             <div className="container mx-auto px-4">
                 <div className="flex flex-col-reverse lg:flex-row items-center gap-16">
                     {/* Text Content */}

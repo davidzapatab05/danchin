@@ -114,8 +114,7 @@
 
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 6rem;
-    /* Adjust based on header height */
+    /* Removed global scroll-padding to avoid conflicts with manual navigation offsets */
   }
 
   body {

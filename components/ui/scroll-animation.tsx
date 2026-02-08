@@ -9,6 +9,7 @@ interface ScrollAnimationProps {
     animation?: "fade-in" | "slide-up" | "slide-left" | "slide-right" | "zoom-in";
     duration?: number;
     delay?: number;
+    triggerOnce?: boolean;
 }
 
 export function ScrollAnimation({
@@ -16,9 +17,10 @@ export function ScrollAnimation({
     className,
     animation = "slide-up",
     duration = 700,
-    delay = 0
+    delay = 0,
+    triggerOnce = true,
 }: ScrollAnimationProps) {
-    const { ref, isInView } = useInView({ threshold: 0.1, rootMargin: "0px", triggerOnce: false });
+    const { ref, isInView } = useInView({ threshold: 0, rootMargin: "0px", triggerOnce });
 
     const getAnimationClass = () => {
         switch (animation) {
@@ -35,7 +37,7 @@ export function ScrollAnimation({
         <div
             ref={ref}
             className={cn(
-                "opacity-0 transition-opacity duration-700 ease-out fill-mode-forwards",
+                "opacity-0 transition-opacity duration-700 ease-out fill-mode-forwards block w-full",
                 isInView && "opacity-100",
                 isInView && getAnimationClass(),
                 className

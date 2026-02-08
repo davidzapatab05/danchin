@@ -23,6 +23,26 @@ const navItems = [
 
 export function Navbar() {
     const { setTheme, theme } = useTheme()
+    const [open, setOpen] = React.useState(false)
+
+    const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+        if (href.startsWith("/#")) {
+            e.preventDefault()
+            const id = href.replace("/#", "")
+            const element = document.getElementById(id)
+            if (element) {
+                setOpen(false)
+                const offset = 80 // Height of header
+                const elementPosition = element.getBoundingClientRect().top
+                const offsetPosition = elementPosition + window.pageYOffset - offset
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: "smooth"
+                })
+            }
+        }
+    }
 
     return (
         <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -45,6 +65,7 @@ export function Navbar() {
                         <Link
                             key={item.name}
                             href={item.href}
+                            onClick={(e) => handleScroll(e, item.href)}
                             className="transition-colors hover:text-primary text-foreground/60"
                         >
                             {item.name}
@@ -74,7 +95,7 @@ export function Navbar() {
                     </div>
 
                     {/* Mobile Navigation */}
-                    <Sheet>
+                    <Sheet open={open} onOpenChange={setOpen}>
                         <SheetTrigger asChild>
                             <Button
                                 variant="ghost"
@@ -88,6 +109,7 @@ export function Navbar() {
                             <div className="mobile-nav px-7 py-4">
                                 <Link
                                     href="/"
+                                    onClick={() => setOpen(false)}
                                     className="flex items-center"
                                 >
                                     <span className="font-bold text-lg">Danchin</span>
@@ -95,14 +117,14 @@ export function Navbar() {
                             </div>
                             <div className="flex flex-col space-y-3 px-7">
                                 {navItems.map((item) => (
-                                    <SheetClose key={item.name} asChild>
-                                        <Link
-                                            href={item.href}
-                                            className="block text-lg font-medium py-2 hover:text-primary transition-colors"
-                                        >
-                                            {item.name}
-                                        </Link>
-                                    </SheetClose>
+                                    <Link
+                                        key={item.name}
+                                        href={item.href}
+                                        onClick={(e) => handleScroll(e, item.href)}
+                                        className="block text-xl font-semibold py-4 hover:text-primary transition-colors border-b border-border/50"
+                                    >
+                                        {item.name}
+                                    </Link>
                                 ))}
                                 <div className="pt-4">
                                     <Button className="w-full font-semibold bg-primary hover:bg-primary/90 text-primary-foreground gap-2 shadow-md" asChild>
