@@ -178,17 +178,21 @@ export function Testimonials() {
                         </div>
 
                         {/* Pagination Dots */}
-                        <div className="flex gap-2.5">
+                        <div className="flex gap-1">
                             {[...Array(pageCount)].map((_, i) => (
                                 <button
                                     key={i}
                                     onClick={() => scrollToPage(i)}
-                                    className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${activeIndex === i
-                                            ? "bg-primary w-8"
-                                            : "bg-primary/20 hover:bg-primary/40"
-                                        }`}
+                                    className="flex items-center justify-center w-11 h-11 -m-2 group/dot"
                                     aria-label={`Go to page ${i + 1}`}
-                                />
+                                >
+                                    <div
+                                        className={`h-2.5 rounded-full transition-all duration-300 ${activeIndex === i
+                                            ? "bg-primary w-8"
+                                            : "bg-primary/20 w-2.5 group-hover/dot:bg-primary/40"
+                                            }`}
+                                    />
+                                </button>
                             ))}
                         </div>
                     </div>
