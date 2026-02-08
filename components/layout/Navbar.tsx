@@ -28,14 +28,13 @@ export function Navbar() {
         <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
             <div className="container mx-auto px-4 h-16 flex items-center justify-between">
                 <Link href="/" className="flex items-center space-x-2">
-                    <NextImage
+                    <img
                         src="/images/logo.webp"
                         alt="Danchin Logo"
-                        width={40}
-                        height={40}
+                        width="40"
+                        height="40"
                         className="h-10 w-auto object-contain"
-                        priority
-                        fetchPriority="high"
+                        fetchpriority="high"
                     />
                     <span className="text-xl font-bold text-primary tracking-tight hidden sm:block">Danchin</span>
                 </Link>

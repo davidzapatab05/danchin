@@ -9,8 +9,10 @@
     "lint": "eslint"
   },
   "browserslist": [
-    "defaults",
-    "not ie 11"
+    "last 2 versions",
+    "not dead",
+    "not ie 11",
+    "> 0.5%"
   ],
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.15",

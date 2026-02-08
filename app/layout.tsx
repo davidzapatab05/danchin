@@ -44,6 +44,9 @@ export const metadata: Metadata = {
   formatDetection: {
     telephone: false,
   },
+  other: {
+    "dns-prefetch": "https://www.transparenttextures.com",
+  },
 };
 
 export const viewport: Viewport = {
@@ -59,9 +62,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" suppressHydrationWarning>
-      <head>
-        <link rel="preconnect" href="https://www.transparenttextures.com" crossOrigin="anonymous" />
-      </head>
       <body className={inter.className}>
         <ThemeProvider
           attribute="class"
