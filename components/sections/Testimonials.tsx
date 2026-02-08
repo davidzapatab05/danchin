@@ -47,15 +47,58 @@ const testimonials = [
 
 export function Testimonials() {
     const scrollRef = React.useRef<HTMLDivElement>(null)
+    const [activeIndex, setActiveIndex] = React.useState(0)
+    const [itemsPerPage, setItemsPerPage] = React.useState(1)
+
+    // Calculate items per page based on window width
+    React.useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth >= 1024) setItemsPerPage(3)
+            else if (window.innerWidth >= 768) setItemsPerPage(2)
+            else setItemsPerPage(1)
+        }
+        handleResize()
+        window.addEventListener('resize', handleResize)
+        return () => window.removeEventListener('resize', handleResize)
+    }, [])
+
+    const pageCount = Math.ceil(testimonials.length / itemsPerPage)
 
     const scroll = (direction: 'prev' | 'next') => {
         if (scrollRef.current) {
-            const { scrollLeft, clientWidth } = scrollRef.current
-            const scrollTo = direction === 'prev'
+            const { scrollLeft, clientWidth, scrollWidth } = scrollRef.current
+            let scrollTo = direction === 'prev'
                 ? scrollLeft - clientWidth
                 : scrollLeft + clientWidth
 
+            // Infinite loop logic
+            if (direction === 'next' && scrollLeft + clientWidth >= scrollWidth - 10) {
+                scrollTo = 0
+            } else if (direction === 'prev' && scrollLeft <= 10) {
+                scrollTo = scrollWidth
+            }
+
             scrollRef.current.scrollTo({ left: scrollTo, behavior: 'smooth' })
+        }
+    }
+
+    const scrollToPage = (pageIndex: number) => {
+        if (scrollRef.current) {
+            const clientWidth = scrollRef.current.clientWidth
+            scrollRef.current.scrollTo({
+                left: pageIndex * clientWidth,
+                behavior: 'smooth'
+            })
+        }
+    }
+
+    const handleScroll = () => {
+        if (scrollRef.current) {
+            const { scrollLeft, clientWidth } = scrollRef.current
+            const newIndex = Math.round(scrollLeft / clientWidth)
+            if (newIndex !== activeIndex) {
+                setActiveIndex(newIndex)
+            }
         }
     }
 
@@ -81,13 +124,14 @@ export function Testimonials() {
                         className="flex overflow-x-auto snap-x snap-mandatory gap-6 no-scrollbar pb-8 px-4 -mx-4 scroll-smooth"
                         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                         ref={scrollRef}
+                        onScroll={handleScroll}
                     >
                         {testimonials.map((testimonial, index) => (
                             <div
                                 key={index}
                                 className="min-w-full md:min-w-[calc(50%-12px)] lg:min-w-[calc(33.333%-16px)] snap-center first:pl-0"
                             >
-                                <ScrollAnimation key={index} delay={index * 100} animation="slide-up" className="h-full">
+                                <ScrollAnimation key={index} delay={index % itemsPerPage * 100} animation="slide-up" className="h-full">
                                     <Card className="bg-card/50 backdrop-blur-sm border border-border/50 shadow-sm hover:shadow-xl hover:border-primary/20 transition-all duration-300 h-full flex flex-col group/card">
                                         <CardContent className="pt-8 px-8 pb-8 flex-grow flex flex-col">
                                             <Quote className="h-10 w-10 text-primary mb-6 opacity-20 group-hover/card:opacity-40 transition-opacity" />
@@ -110,24 +154,43 @@ export function Testimonials() {
                         ))}
                     </div>
 
-                    {/* Navigation Buttons */}
-                    <div className="flex justify-center gap-4 mt-8">
-                        <Button
-                            variant="outline"
-                            size="icon"
-                            className="rounded-full border-primary/20 hover:bg-primary/10 text-primary"
-                            onClick={() => scroll('prev')}
-                        >
-                            <ChevronLeft className="h-6 w-6" />
-                        </Button>
-                        <Button
-                            variant="outline"
-                            size="icon"
-                            className="rounded-full border-primary/20 hover:bg-primary/10 text-primary"
-                            onClick={() => scroll('next')}
-                        >
-                            <ChevronRight className="h-6 w-6" />
-                        </Button>
+                    {/* Navigation Buttons and Dots */}
+                    <div className="flex flex-col items-center gap-6 mt-8">
+                        <div className="flex justify-center gap-4">
+                            <Button
+                                variant="outline"
+                                size="icon"
+                                className="rounded-full border-primary/20 hover:bg-primary/10 text-primary"
+                                onClick={() => scroll('prev')}
+                                aria-label="Previous testimonial"
+                            >
+                                <ChevronLeft className="h-6 w-6" />
+                            </Button>
+                            <Button
+                                variant="outline"
+                                size="icon"
+                                className="rounded-full border-primary/20 hover:bg-primary/10 text-primary"
+                                onClick={() => scroll('next')}
+                                aria-label="Next testimonial"
+                            >
+                                <ChevronRight className="h-6 w-6" />
+                            </Button>
+                        </div>
+
+                        {/* Pagination Dots */}
+                        <div className="flex gap-2.5">
+                            {[...Array(pageCount)].map((_, i) => (
+                                <button
+                                    key={i}
+                                    onClick={() => scrollToPage(i)}
+                                    className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${activeIndex === i
+                                            ? "bg-primary w-8"
+                                            : "bg-primary/20 hover:bg-primary/40"
+                                        }`}
+                                    aria-label={`Go to page ${i + 1}`}
+                                />
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
