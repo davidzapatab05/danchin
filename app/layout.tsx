@@ -5,33 +5,56 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { ScrollToTop } from "@/components/ui/scroll-to-top";
 
 const inter = Inter({ subsets: ["latin"] });
+const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://danchin.vercel.app").replace(/\/$/, "");
 
 export const metadata: Metadata = {
-  title: "Danchin - Fisioterapia & Bienestar | Recuperación en Casa",
-  description: "Especialistas en fisioterapia a domicilio, rehabilitación física y masajes terapéuticos en Lima. Trato humano y resultados reales con el Lic. Daniel Chinguel.",
-  keywords: ["fisioterapia", "rehabilitación", "masajista", "lima", "domicilio", "terapia fisica", "dolor de espalda"],
+  metadataBase: new URL(siteUrl),
+  alternates: {
+    canonical: "/",
+  },
+  title: "Danchin - Fisioterapia y Bienestar | Recuperacion en Casa",
+  description:
+    "Especialistas en fisioterapia a domicilio, rehabilitacion fisica y masajes terapeuticos en Lima. Trato humano y resultados reales con el Lic. Daniel Chinguel.",
+  keywords: [
+    "fisioterapia",
+    "rehabilitacion",
+    "masajista",
+    "lima",
+    "domicilio",
+    "terapia fisica",
+    "dolor de espalda",
+  ],
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
   manifest: "/manifest.webmanifest",
   icons: {
     icon: [
       { url: "/favicon.ico" },
       { url: "/icons/favicon-32x32.png", sizes: "32x32", type: "image/png" },
     ],
-    apple: [
-      { url: "/icons/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
-    ],
+    apple: [{ url: "/icons/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
   },
   openGraph: {
     type: "website",
     locale: "es_PE",
-    url: "https://danchin.pe",
-    title: "Danchin - Fisioterapia & Bienestar",
+    url: siteUrl,
+    title: "Danchin - Fisioterapia y Bienestar",
     description: "Recupera tu movilidad sin salir de casa. Fisioterapia profesional y humana.",
     siteName: "Danchin Fisioterapia",
     images: [
       {
-        url: "/images/hero-og.jpg", // We should make sure this exists or use a generic one
-        width: 1200,
-        height: 630,
+        url: "/images/logo.webp",
+        width: 1024,
+        height: 1024,
         alt: "Danchin Fisioterapia",
       },
     ],
@@ -39,8 +62,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Danchin - Fisioterapia a Domicilio",
-    description: "Tu bienestar en las mejores manos. Agenda tu sesión hoy.",
-    images: ["/images/hero-og.jpg"],
+    description: "Tu bienestar en las mejores manos. Agenda tu sesion hoy.",
+    images: ["/images/logo.webp"],
   },
   appleWebApp: {
     capable: true,
@@ -72,12 +95,7 @@ export default function RootLayout({
   return (
     <html lang="es" suppressHydrationWarning>
       <body className={inter.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          enableSystem
-          disableTransitionOnChange
-        >
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
           {children}
           <ScrollToTop />
         </ThemeProvider>
